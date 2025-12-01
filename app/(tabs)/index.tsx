@@ -1,31 +1,37 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet , Pressable } from 'react-native';
 
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import * as Progress from 'react-native-progress';
+import { useState } from 'react';
 
 export default function TabOneScreen() {
+  const [timerProgress, setTimerProgress] = useState(1);
+  const [isTimerRunning,setTimerRunning] = useState(false);
+
+  const onTimerPress = () => {
+    setTimerProgress(prev => Math.max(prev - 0.05 , 0));
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
-  );
+    <SafeAreaView style={localStyles.screen}>
+
+    <Pressable onPress={onTimerPress}>
+      <Progress.Pie progress={timerProgress} size={300} indeterminate={false} color="rgba(255,255,255,1)"/>
+    </Pressable>
+    
+      <Text style={localStyles.timeLeft}>25:00</Text>
+    </SafeAreaView>);
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+const localStyles = StyleSheet.create({
+  screen: {
+    flex:1 ,
+    justifyContent: "center",
+    alignItems: "center",
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+  timeLeft: {
+    fontSize:30
+  }
+ });
