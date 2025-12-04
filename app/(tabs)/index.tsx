@@ -13,12 +13,22 @@ export default function TabOneScreen() {
   const [isTimerRunning, setTimerRunning] = useState(false);
   const TimerID = useRef<number | null>(null);
 
+  /**
+   * @function getStringMinutesAndSeconds()
+   * @param timerProgress Seconds that need to be converted in format MM:SS string to render Time
+   * @example <Text> {getStringMinutesAndSeconds(Seconds)} <Text>
+   * @returns return String Stroke in format 25:00
+   */
   const getStringMinutesAndSeconds = (timerProgress: number) => {
     const minutes = Math.floor(timerProgress / 60);
     const secondsRemaining = timerProgress % 60;
-    return `${minutes}:${secondsRemaining.toString().padStart(2, "0")}`;
+    return `${minutes.toString()}:${secondsRemaining.toString().padStart(2, "0")}`;
   };
 
+  /**
+   * @async
+   * Just Playing Sound
+   * */
   const PlaySound = async () => {
     const { sound } = await Audio.Sound.createAsync(
       require("../../assets/sounds/timer-terminer-342934.mp3"),
@@ -26,6 +36,14 @@ export default function TabOneScreen() {
     await sound.playAsync();
   };
 
+  /**
+   *
+   *
+   *Starts counting down from `totalTime` to zero, and plays a character sound when finished.
+   *
+   * This function sets the timer state and updates `timerProgress` every second.
+   * When the timer reaches zero, it stops automatically and resets if needed.   * @returns {void}
+   * */
   const setTimerState = () => {
     if (isTimerRunning) {
       return;
@@ -41,6 +59,7 @@ export default function TabOneScreen() {
           TimerID.current = null;
           setTimerRunning(false);
           PlaySound();
+          return totalTime;
         }
         return newTime;
       });
