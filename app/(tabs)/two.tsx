@@ -1,31 +1,39 @@
-import { Button, StyleSheet } from "react-native";
+import { Button, Dimensions, Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { useEffect, useRef, useState } from "react";
+import { Calendar } from "react-native-big-calendar";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+
+import SvgMakeApointment from '../../assets/icons-svg/message-plus-square-svgrepo-com.svg';
+
+const { width: screenWidth ,height: screenHeight} = Dimensions.get("window");
 
 export default function TabTwoScreen() {
-  const [currentTime, setCurrentTime] = useState(0);
-  const intervalRef = useRef<number | null>(null);
-
-  const startTimer = () => {
-    intervalRef.current = setInterval(() => {
-      setCurrentTime((prev) => {
-        const newTime = prev + 1;
-        if (newTime === 10 && intervalRef.current) {
-          clearInterval(intervalRef.current);
-          intervalRef.current = null;
-        }
-        return newTime;
-      });
-    }, 1000);
-  };
+  const events = [
+    {
+      title: "Meeting",
+      start: new Date(2020, 1, 11, 10, 0),
+      end: new Date(2020, 1, 11, 10, 30),
+    },
+    {
+      title: "Coffee break",
+      start: new Date(2020, 1, 11, 15, 45),
+      end: new Date(2020, 1, 11, 16, 30),
+    },
+  ];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{currentTime}</Text>
-      <Button title="Start" onPress={startTimer} />
-    </View>
+    <SafeAreaView>
+      <Calendar events={events} mode="day" height={screenHeight} />
+      <Pressable style={styles.addApointmentIcon}>
+        <SvgMakeApointment width={styles.addApointmentIcon.width} 
+        height={styles.addApointmentIcon.height} 
+        style={{flex:1}}/>
+      </Pressable>
+    </SafeAreaView>
   );
 }
 
@@ -43,5 +51,12 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: "80%",
+  },
+  addApointmentIcon: {
+    position: "absolute",
+    width: 100,
+    height: 100,
+    right: screenWidth * 0.05,
+    bottom: screenHeight * 0.25
   },
 });

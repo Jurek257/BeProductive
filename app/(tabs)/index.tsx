@@ -5,9 +5,13 @@ import { Text, View } from "@/components/Themed";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Progress from "react-native-progress";
 import { useRef, useState } from "react";
-import { Audio } from "expo-av";
+import {useAudioPlayer} from 'expo-audio';
+
+const audioTimerFinished = require('../../assets/sounds/timer-terminer-342934.mp3');
 
 export default function TabOneScreen() {
+  const playerTimerFinished = useAudioPlayer(audioTimerFinished);
+
   const totalTime: number = 30;
   const [timerProgress, setTimerProgress] = useState(totalTime);
   const [isTimerRunning, setTimerRunning] = useState(false);
@@ -25,16 +29,7 @@ export default function TabOneScreen() {
     return `${minutes.toString()}:${secondsRemaining.toString().padStart(2, "0")}`;
   };
 
-  /**
-   * @async
-   * Just Playing Sound
-   * */
-  const PlaySound = async () => {
-    const { sound } = await Audio.Sound.createAsync(
-      require("../../assets/sounds/timer-terminer-342934.mp3"),
-    );
-    await sound.playAsync();
-  };
+ 
 
   /**
    *
@@ -55,10 +50,11 @@ export default function TabOneScreen() {
       setTimerProgress((previousTime) => {
         const newTime = previousTime - 1;
         if (newTime === 0 && TimerID.current) {
+          playerTimerFinished.play();
           clearInterval(TimerID.current);
           TimerID.current = null;
           setTimerRunning(false);
-          PlaySound();
+
           return totalTime;
         }
         return newTime;
