@@ -5,6 +5,7 @@ import { Text, View } from "@/components/Themed";
 import { useEffect, useRef, useState } from "react";
 import { Calendar } from "react-native-big-calendar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Link, Tabs } from 'expo-router';
 
 
 import SvgMakeApointment from '../../assets/icons-svg/message-plus-square-svgrepo-com.svg';
@@ -28,11 +29,18 @@ export default function TabTwoScreen() {
   return (
     <SafeAreaView>
       <Calendar events={events} mode="day" height={screenHeight} />
-      <Pressable style={styles.addApointmentIcon}>
+
+      <Link href="/modal" asChild>
+       <Pressable style={styles.addApointmentIcon}>
         <SvgMakeApointment width={styles.addApointmentIcon.width} 
         height={styles.addApointmentIcon.height} 
         style={{flex:1}}/>
-      </Pressable>
+        </Pressable>
+
+      </Link>
+
+     
+      
     </SafeAreaView>
   );
 }
