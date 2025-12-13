@@ -1,35 +1,122 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
-
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { StatusBar } from "expo-status-bar";
+import { Platform, StyleSheet, TextInput, Pressable } from "react-native";
+import { useState } from "react";
+import EditScreenInfo from "@/components/EditScreenInfo";
+import { Text, View } from "@/components/Themed";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Spacer } from "../components/Spacer.tsx";
 
 export default function ModalScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
+  // const [eventName, setEventName] = useState("");
+  const [mode, setMode] = useState("date");
+  const [visibility, setVisibility] = useState(false);
+  const [date, setDate] = useState(new Date(745837539847));
+  const [time, setTime] = useState(null);
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View>
+  const onChange = (event, selectedDatetime) => {
+    setVisibility(false);
+    setDate(selectedDatetime);
+  };
+
+  const showMode = (currentMode) => {
+    setVisibility(true);
+    setMode(currentMode);
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <TextInput
+        placeholder="Your event"
+        // value={eventName}
+        // onChangeText={setEventName}
+        style={styles.textInput}
+      />
+
+      <Spacer height={40} />
+
+      <View style={styles.datetimeContainer}>
+        <View style={styles.dateTimeSelector}>
+          <Text>Begin from:</Text>
+
+          <View style={styles.dateAndTime}>
+            <Pressable onPress={() => showMode("date")}>
+              <Text>Mo 23 Januar</Text>
+            </Pressable>
+            <Pressable onPress={() => showMode("time")}>
+              <Text>8.00</Text>
+            </Pressable>
+          </View>
+        </View>
+
+        <Spacer height={40} />
+
+        <View style={styles.dateTimeSelector}>
+          <Text>Untill:</Text>
+
+          <View style={styles.dateAndTime}>
+            <Pressable onPress={() => showMode("date")}>
+              <Text>Mo 23 Januar</Text>
+            </Pressable>
+            <Pressable onPress={() => showMode("time")}>
+              <Text>9.00</Text>
+            </Pressable>
+          </View>
+        </View>
+      </View>
+
+      <Pressable style={styles.createButton}>
+        <Text
+          style={{
+            textAlign: "center",
+          }}
+        >
+          Create
+        </Text>
+      </Pressable>
+
+      {visibility && (
+        <DateTimePicker
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+          value={date}
+        />
+      )}
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    marginHorizontal: 30,
+    fontSize: 30,
   },
-  title: {
+  datetimeContainer: {
+    justifyContent: "space-between",
+  },
+  dateTimeSelector: {
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+  dateAndTime: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  textInput: {
+    borderBottomWidth: 1,
+    borderBottomColor: "#ff0000",
+    color: "white",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    paddingVertical: 12,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  createButton: {
+    marginTop: "auto",
+    paddingVertical: 30,
+    paddingHorizontal: 100,
+    backgroundColor: "#4DA3FF",
   },
 });

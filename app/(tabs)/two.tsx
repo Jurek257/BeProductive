@@ -31,11 +31,11 @@ export default function TabTwoScreen() {
       <Calendar events={events} mode="day" height={screenHeight} />
 
       <Link href="/modal" asChild>
-      <Pressable style={styles.addApointmentIcon}>
+       <Pressable style={styles.addApointmentIcon}>
         <SvgMakeApointment width={styles.addApointmentIcon.width} 
         height={styles.addApointmentIcon.height} 
         style={{flex:1}}/>
-      </Pressable>
+        </Pressable>
 
       </Link>
 
