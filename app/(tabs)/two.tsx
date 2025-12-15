@@ -1,16 +1,15 @@
 import { Button, Dimensions, Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
+import { Text, View, SafeAreaView } from "@/components/Themed";
 import { useEffect, useRef, useState } from "react";
 import { Calendar } from "react-native-big-calendar";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Link, Tabs } from 'expo-router';
 
+import { Link, Tabs } from "expo-router";
 
-import SvgMakeApointment from '../../assets/icons-svg/message-plus-square-svgrepo-com.svg';
+import SvgMakeApointment from "../../assets/icons-svg/message-plus-square-svgrepo-com.svg";
 
-const { width: screenWidth ,height: screenHeight} = Dimensions.get("window");
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 export default function TabTwoScreen() {
   const events = [
@@ -31,16 +30,14 @@ export default function TabTwoScreen() {
       <Calendar events={events} mode="day" height={screenHeight} />
 
       <Link href="/modal" asChild>
-       <Pressable style={styles.addApointmentIcon}>
-        <SvgMakeApointment width={styles.addApointmentIcon.width} 
-        height={styles.addApointmentIcon.height} 
-        style={{flex:1}}/>
+        <Pressable style={styles.addApointmentIcon}>
+          <SvgMakeApointment
+            width={styles.addApointmentIcon.width}
+            height={styles.addApointmentIcon.height}
+            style={{ flex: 1 }}
+          />
         </Pressable>
-
       </Link>
-
-     
-      
     </SafeAreaView>
   );
 }
@@ -65,6 +62,6 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     right: screenWidth * 0.05,
-    bottom: screenHeight * 0.25
+    bottom: screenHeight * 0.25,
   },
 });

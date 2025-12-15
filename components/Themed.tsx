@@ -7,6 +7,7 @@ import { Text as DefaultText, View as DefaultView } from "react-native";
 
 import Colors from "@/constants/Colors";
 import { useColorScheme } from "./useColorScheme";
+import { SafeAreaView as DefaultSafeAreaView } from "react-native-safe-area-context";
 
 type ThemeProps = {
   lightColor?: string;
@@ -15,12 +16,14 @@ type ThemeProps = {
 
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
+export type SafeAreaViewProps = ThemeProps & DefaultSafeAreaView["props"];
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
   colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
 ) {
-  const theme = useColorScheme() ?? "light";
+  const theme: string = "light"; //temporarily for only white background
+  // const theme = useColorScheme() ?? "light";
   const colorFromProps = props[theme];
 
   if (colorFromProps) {
@@ -47,4 +50,16 @@ export function View(props: ViewProps) {
   );
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export function SafeAreaView(props: SafeAreaViewProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    { light: lightColor, dark: darkColor },
+    "background",
+  );
+
+  return (
+    <DefaultSafeAreaView style={[{ backgroundColor }, style]} {...otherProps} />
+  );
 }

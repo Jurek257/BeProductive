@@ -1,13 +1,17 @@
 import { StyleSheet, Pressable } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, View, SafeAreaView, useThemeColor } from "@/components/Themed";
+
 import * as Progress from "react-native-progress";
 import { useRef, useState } from "react";
-import {useAudioPlayer} from 'expo-audio';
+import { useAudioPlayer } from "expo-audio";
 
-const audioTimerFinished = require('../../assets/sounds/timer-terminer-342934.mp3');
+const backgroundColor = useThemeColor({},"background");
+const textColor = useThemeColor({}, "text");
+const accentColor = useThemeColor({}, "tint");
+
+const audioTimerFinished = require("../../assets/sounds/timer-terminer-342934.mp3");
 
 export default function TabOneScreen() {
   const playerTimerFinished = useAudioPlayer(audioTimerFinished);
@@ -28,8 +32,6 @@ export default function TabOneScreen() {
     const secondsRemaining = timerProgress % 60;
     return `${minutes.toString()}:${secondsRemaining.toString().padStart(2, "0")}`;
   };
-
- 
 
   /**
    *
@@ -63,7 +65,7 @@ export default function TabOneScreen() {
   };
 
   return (
-    <SafeAreaView style={localStyles.screen}>
+    <SafeAreaView style={[backgroundColor,{localStyles.screen}]}>
       <Pressable onPress={setTimerState}>
         <Progress.Pie
           progress={timerProgress / totalTime}
@@ -73,7 +75,7 @@ export default function TabOneScreen() {
         />
       </Pressable>
 
-      <Text style={localStyles.timeLeft}>
+      <Text style={[textColor,{localStyles.timeLeft}]}>
         {getStringMinutesAndSeconds(timerProgress)}
       </Text>
     </SafeAreaView>

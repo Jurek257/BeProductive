@@ -2,17 +2,17 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View } from "@/components/Themed";
+import { Text, View, SafeAreaView } from "@/components/Themed";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { SafeAreaView } from "react-native-safe-area-context";
+
 import { Spacer } from "../components/Spacer.tsx";
 
 export default function ModalScreen() {
   // const [eventName, setEventName] = useState("");
   const [mode, setMode] = useState("date");
   const [visibility, setVisibility] = useState(false);
-  const [date, setDate] = useState(new Date(745837539847));
-  const [time, setTime] = useState(null);
+  const [date, setDate] = useState(new Date(745837539847)); // To DO , initialize current Date
+  const [time, setTime] = useState(null); // To DO , initialize current Time
 
   const onChange = (event, selectedDatetime) => {
     setVisibility(false);
@@ -41,10 +41,10 @@ export default function ModalScreen() {
 
           <View style={styles.dateAndTime}>
             <Pressable onPress={() => showMode("date")}>
-              <Text>Mo 23 Januar</Text>
+              <Text>{date}</Text>
             </Pressable>
             <Pressable onPress={() => showMode("time")}>
-              <Text>8.00</Text>
+              <Text>{time}</Text>
             </Pressable>
           </View>
         </View>
@@ -56,10 +56,10 @@ export default function ModalScreen() {
 
           <View style={styles.dateAndTime}>
             <Pressable onPress={() => showMode("date")}>
-              <Text>Mo 23 Januar</Text>
+              <Text>{date}</Text>
             </Pressable>
             <Pressable onPress={() => showMode("time")}>
-              <Text>9.00</Text>
+              <Text>{time}</Text>
             </Pressable>
           </View>
         </View>
