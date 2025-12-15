@@ -2,10 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet, TextInput, Pressable } from "react-native";
 import { useState } from "react";
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View, SafeAreaView } from "@/components/Themed";
+import { Text, View, SafeAreaView, useThemeColor } from "@/components/Themed";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { Spacer } from "../components/Spacer.tsx";
+
+const backgroundColor = useThemeColor({}, "background");
+const textColor = useThemeColor({}, "text");
+const accentColor = useThemeColor({}, "tint");
 
 export default function ModalScreen() {
   // const [eventName, setEventName] = useState("");

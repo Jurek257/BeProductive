@@ -1,13 +1,17 @@
 import { Button, Dimensions, Pressable, StyleSheet } from "react-native";
 
 import EditScreenInfo from "@/components/EditScreenInfo";
-import { Text, View, SafeAreaView } from "@/components/Themed";
+import { Text, View, SafeAreaView, useThemeColor } from "@/components/Themed";
 import { useEffect, useRef, useState } from "react";
 import { Calendar } from "react-native-big-calendar";
 
 import { Link, Tabs } from "expo-router";
 
 import SvgMakeApointment from "../../assets/icons-svg/message-plus-square-svgrepo-com.svg";
+
+const backgroundColor = useThemeColor({}, "background");
+const textColor = useThemeColor({}, "text");
+const accentColor = useThemeColor({}, "tint");
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 

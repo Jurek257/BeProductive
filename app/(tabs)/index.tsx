@@ -6,8 +6,9 @@ import { Text, View, SafeAreaView, useThemeColor } from "@/components/Themed";
 import * as Progress from "react-native-progress";
 import { useRef, useState } from "react";
 import { useAudioPlayer } from "expo-audio";
+import { colord } from "colord";
 
-const backgroundColor = useThemeColor({},"background");
+const backgroundColor = useThemeColor({}, "background");
 const textColor = useThemeColor({}, "text");
 const accentColor = useThemeColor({}, "tint");
 
@@ -65,17 +66,17 @@ export default function TabOneScreen() {
   };
 
   return (
-    <SafeAreaView style={[backgroundColor,{localStyles.screen}]}>
+    <SafeAreaView style={[{ backgroundColor }, localStyles.screen]}>
       <Pressable onPress={setTimerState}>
         <Progress.Pie
           progress={timerProgress / totalTime}
           size={300}
           indeterminate={false}
-          color="rgba(255,255,255,1)"
+          color={colord(accentColor).alpha(1).toRgbString()}
         />
       </Pressable>
 
-      <Text style={[textColor,{localStyles.timeLeft}]}>
+      <Text style={[{ textColor }, localStyles.timeLeft]}>
         {getStringMinutesAndSeconds(timerProgress)}
       </Text>
     </SafeAreaView>
